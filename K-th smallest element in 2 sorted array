@@ -1,0 +1,88 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void mergestep(int array[], int low, int mid, int high) {
+    int i = low;
+    int j = mid + 1;
+    vector<int> temp;
+
+    while (i <= mid && j <= high) {
+        if (array[i] <= array[j]) {
+            temp.push_back(array[i]);
+            i++;
+        } else {
+            temp.push_back(array[j]);
+            j++;
+        }
+    }
+    while (i <= mid) {
+        temp.push_back(array[i]);
+        i++;
+    }
+    while (j <= high) {
+        temp.push_back(array[j]);
+        j++;
+    }
+
+    for (int i = 0; i < temp.size(); i++) {
+        array[low + i] = temp[i];
+    }
+}
+
+void merge(int array[], int low, int high) {
+    if (low < high) {
+        int mid = (low + high) / 2;
+        merge(array, low, mid);
+        merge(array, mid + 1, high);
+        mergestep(array, low, mid, high);
+    }
+}
+
+int main() {
+    int n1, n2, k;
+    cout << "Enter size of first sorted array: ";
+    cin >> n1;
+    int arr1[n1];
+    cout << "Enter elements of first sorted array:\n";
+    for (int i = 0; i < n1; i++) {
+        cin >> arr1[i];
+    }
+
+    cout << "Enter size of second sorted array: ";
+    cin >> n2;
+    int arr2[n2];
+    cout << "Enter elements of second sorted array:\n";
+    for (int i = 0; i < n2; i++) {
+        cin >> arr2[i];
+    }
+
+    int totalSize = n1 + n2;
+    int mergedArray[totalSize];
+    for (int i = 0; i < n1; i++) {
+        mergedArray[i] = arr1[i];
+    }
+    for (int i = 0; i < n2; i++) {
+        mergedArray[n1 + i] = arr2[i];
+    }
+
+    cout << "Enter k (k-th smallest element to find): ";
+    cin >> k;
+
+
+    merge(mergedArray, 0, totalSize - 1);
+
+    cout << "Sorted merged array: ";
+    for (int i = 0; i < totalSize; i++) {
+        cout << mergedArray[i] << " ";
+    }
+    cout << "\n";
+
+    if (k > 0 && k <= totalSize) {
+        cout << "The " << k << "-th smallest element is: " << mergedArray[k - 1] << endl;
+    } else {
+        cout << "Invalid k\n";
+    }
+
+    return 0;
+}
