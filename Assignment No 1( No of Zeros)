@@ -1,0 +1,58 @@
+// Implement a problem of number of zeroes.   
+// Statement: Given an array of 1s and 0s which has all 1s first followed 
+// by all 0s? Find the number of 0s. Count the number of zeroes in the 
+// given array  
+
+#include<iostream>
+using namespace std;
+
+int main()
+{
+    int answer;
+    int size;
+    int low=0;
+    int high;
+    int mid;
+    int array[100];
+    cout<<"Enter the size of array ";
+    cin>>size;
+    high = size;
+
+    for(int i=0;i<size;i++)
+{
+    cin>>array[i];
+
+}
+mid =( (low + high)/2);
+while(low<=high){
+
+    if(array[mid]==0){
+   
+        if(array[mid-1]==0)
+        {
+            high=mid-1;
+        
+        
+        }
+        else {
+            answer=size-mid;
+            cout<<"no of zero's are "<<answer;
+            break;
+        }
+    }
+    else{
+       
+        if(array[mid+1]==1){
+            low = mid+1;
+        }
+        else{
+            answer= size-1-mid;
+           
+            cout<<"No of zero's are "<<answer;
+            break;
+
+        }
+        }
+mid =( (low + high)/2);
+    }
+}
